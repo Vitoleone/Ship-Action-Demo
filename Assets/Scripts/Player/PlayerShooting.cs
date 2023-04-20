@@ -10,6 +10,12 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Rocket rocketPrefab;
     private ObjectPool<Rocket> pooledRockets;
     public float fireCooldown = 0;
+    private Player playerAttributes;
+
+    private void Awake()
+    {
+        playerAttributes = GetComponent<Player>();
+    }
 
     void Start()
     {
@@ -40,12 +46,14 @@ public class PlayerShooting : MonoBehaviour
 
     public void Shoot()
     {
-        if (fireCooldown <= 0)
+        if (fireCooldown <= 0 && playerAttributes.currentAmmo > 0)
         {
             var rocket = pooledRockets.Get();
             rocket.transform.position = transform.position + 2*Vector3.down;
             rocket.Init(ExplodeRocket);
             fireCooldown = 0.5f;
+            playerAttributes.currentAmmo--;
+            playerAttributes.uiController.SetAmmoTextValues(playerAttributes.currentAmmo,playerAttributes.maxAmmo);
         }
     }
 
