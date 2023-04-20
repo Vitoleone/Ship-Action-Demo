@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private Rocket rocketPrefab;
     private ObjectPool<Rocket> pooledRockets;
+    public float fireCooldown = 0;
 
     void Start()
     {
@@ -28,20 +30,23 @@ public class PlayerShooting : MonoBehaviour
             },false,10,20);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (fireCooldown > 0)
         {
-            Shoot();
+            fireCooldown -= Time.deltaTime;
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
-        var rocket = pooledRockets.Get();
-        rocket.transform.position = transform.position + 2*Vector3.down;
-        rocket.Init(ExplodeRocket);
+        if (fireCooldown <= 0)
+        {
+            var rocket = pooledRockets.Get();
+            rocket.transform.position = transform.position + 2*Vector3.down;
+            rocket.Init(ExplodeRocket);
+            fireCooldown = 0.5f;
+        }
     }
 
     void ExplodeRocket(Rocket rocket)
