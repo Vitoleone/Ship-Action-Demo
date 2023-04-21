@@ -6,7 +6,8 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     private Action<Rocket> explodeAction;
-    // Start is called before the first frame update
+    public PlayerAttributesScriptable playerAttributes;
+    
     public void Init( Action<Rocket> explodeAction)
     {
         this.explodeAction = explodeAction;
@@ -17,6 +18,12 @@ public class Rocket : MonoBehaviour
         if (other.transform.CompareTag("Ground"))
         {
             explodeAction(this);
+        }
+        else if(other.transform.CompareTag("Enemy"))
+        {
+            explodeAction(this);
+            other.GetComponent<Enemy>().TakeDamage(playerAttributes.rocketDamage);
+            Debug.Log("Damaged");
         }
     }
 }
