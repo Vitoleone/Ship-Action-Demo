@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class PlayerShooting : MonoBehaviour
     private ObjectPool<Rocket> pooledRockets;
     public float fireCooldown = 0;
     private Player playerAttributes;
+
+    [SerializeField] private GameObject crosshair; 
 
     private void Awake()
     {
@@ -49,7 +53,7 @@ public class PlayerShooting : MonoBehaviour
         if (fireCooldown <= 0 && playerAttributes.currentAmmo > 0)
         {
             var rocket = pooledRockets.Get();
-            rocket.transform.position = transform.position + 2*Vector3.down;
+            rocket.GetComponent<Rigidbody>().DOMove(crosshair.transform.position, 0.7f);
             rocket.Init(ExplodeRocket);
             fireCooldown = 0.5f;
             playerAttributes.currentAmmo--;
