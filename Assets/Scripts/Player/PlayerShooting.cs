@@ -12,27 +12,30 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Rocket rocketPrefab;
     private ObjectPool<Rocket> pooledRockets;
     public float fireCooldown = 0;
-    private Player playerAttributes;
+    private Player player;
 
     [SerializeField] private GameObject crosshair; 
 
     private void Awake()
     {
-        playerAttributes = GetComponent<Player>();
+        player = GetComponent<Player>();
     }
 
     void Start()
     {
         pooledRockets = new ObjectPool<Rocket>(() =>
             {
-                return Instantiate(rocketPrefab); //When we ask the object this function will run.
+                return Instantiate(rocketPrefab,player.transform); //When we ask the object this function will run.
             }, rocket =>
             {
-                rocket.gameObject.SetActive(true); //When we get the object this function will run.
+                rocket.gameObject.SetActive(true);
+                rocket.transform.position = transform.position + 2*Vector3.down; //When we get the object this function will run.
             },
             rocket =>
             {
-                rocket.gameObject.SetActive(false); //When we are done with object this function will run.
+                rocket.gameObject.SetActive(false);
+                rocket.transform.position =
+                    transform.position + 2*Vector3.down; //When we are done with object this function will run.
             },
             rocket =>
             {
@@ -50,20 +53,21 @@ public class PlayerShooting : MonoBehaviour
 
     public void Shoot()
     {
-        if (fireCooldown <= 0 && playerAttributes.currentAmmo > 0)
+        if (fireCooldown <= 0 && player.playerAttributes.currentAmmo > 0)
         {
             var rocket = pooledRockets.Get();
-            rocket.GetComponent<Rigidbody>().DOMove(crosshair.transform.position, 0.45f);
+            rocket.GetComponent<Rigidbody>().transform.DOMove(crosshair.transform.position, 0.45f);
             rocket.Init(ExplodeRocket);
             fireCooldown = 0.5f;
-            playerAttributes.currentAmmo--;
-            playerAttributes.uiController.SetAmmoTextValues(playerAttributes.currentAmmo,playerAttributes.maxAmmo);
+            player.playerAttributes.currentAmmo--;
+            player.uiController.SetAmmoTextValues(player.playerAttributes.currentAmmo,player.playerAttributes.maxAmmo);
+            
         }
     }
 
     void ExplodeRocket(Rocket rocket)
     {
         pooledRockets.Release(rocket);
-        rocket.transform.position = transform.position + 2*Vector3.down;
     }
+    
 }
