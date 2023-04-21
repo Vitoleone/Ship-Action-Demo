@@ -53,7 +53,7 @@ public class PlayerShooting : MonoBehaviour
         if (fireCooldown <= 0 && playerAttributes.currentAmmo > 0)
         {
             var rocket = pooledRockets.Get();
-            rocket.GetComponent<Rigidbody>().DOMove(crosshair.transform.position, 0.7f);
+            rocket.GetComponent<Rigidbody>().DOMove(crosshair.transform.position, 0.45f);
             rocket.Init(ExplodeRocket);
             fireCooldown = 0.5f;
             playerAttributes.currentAmmo--;
