@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2074549776}
   - component: {fileID: 2074549777}
+  - component: {fileID: 6126189311567685669}
   m_Layer: 0
   m_Name: AttackCollider
   m_TagString: Untagged
@@ -45,6 +46,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 6
   m_Center: {x: 0, y: 7, z: 0}
+--- !u!114 &6126189311567685669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074549775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a84a8216b741b0458647c61462096fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: -7224525114755481546, guid: f5f6dadbb5da92648bc2e277b103b8b4, type: 3}
+  fireCooldown: 0.25
 --- !u!1 &15750685277511243
 GameObject:
   m_ObjectHideFlags: 0
