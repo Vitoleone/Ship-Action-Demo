@@ -958,8 +958,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 1930947514}
-  moveSpeed: 0
-  rotateSpeed: 7
+  moveSpeed: 2
+  rotateSpeed: 5
 --- !u!54 &424299973
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1010,6 +1010,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiController: {fileID: 1195280800}
   playerAttributes: {fileID: 11400000, guid: b9790e9c77679ae41a5b6f588566b6d6, type: 2}
+--- !u!64 &424299983
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424299971}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 616f46a600b42a24a8fdf52f60ec5105, type: 3}
 --- !u!1001 &592106326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1019,6 +1033,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4333738787854198977, guid: 4ce8211383addb249b74657e8c434cf2, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4333738787854198977, guid: 4ce8211383addb249b74657e8c434cf2, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4333738787854496993, guid: 4ce8211383addb249b74657e8c434cf2, type: 3}
@@ -3467,7 +3485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3610332648246375121, guid: dceca3dc830dc314485bbc90e938e2d4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.86
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 3610332648246375121, guid: dceca3dc830dc314485bbc90e938e2d4, type: 3}
       propertyPath: m_LocalPosition.y

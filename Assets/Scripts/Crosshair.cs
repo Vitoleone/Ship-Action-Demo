@@ -14,7 +14,7 @@ public class Crosshair : MonoBehaviour
         }
         else
         {
-            spriteRenderer.color = Color.grey;
+            spriteRenderer.color = Color.green;
         }
     }
 }
