@@ -714,6 +714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 10
+  goldPrefab: {fileID: 88447522627732597, guid: ec7fb618b7a14734ca8ddb7d35dbddc0, type: 3}
 --- !u!1 &1929764583424359081
 GameObject:
   m_ObjectHideFlags: 0

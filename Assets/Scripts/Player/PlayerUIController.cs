@@ -10,6 +10,7 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] private Image healthBar;
     [SerializeField] private TextMeshProUGUI currentAmmoText;
     [SerializeField] private TextMeshProUGUI maxAmmoText;
+    [SerializeField] private TextMeshProUGUI goldText;
 
     public void SetHealthBar(int currentHealth, int maxHealth)
     {
@@ -20,5 +21,10 @@ public class PlayerUIController : MonoBehaviour
     {
         currentAmmoText.text = currentAmmo.ToString();
         maxAmmoText.text = maxAmmo.ToString();
+    }
+
+    public void SetGoldTextValue(int money)
+    {
+        goldText.text = money.ToString();
     }
 }

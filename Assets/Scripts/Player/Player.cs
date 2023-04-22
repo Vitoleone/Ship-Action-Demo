@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     {
         uiController.SetHealthBar(playerAttributes.currentHealth,playerAttributes.maxHealth);
         uiController.SetAmmoTextValues(playerAttributes.currentHealth,playerAttributes.maxAmmo);
+        uiController.SetGoldTextValue(playerAttributes.money);
+        
     }
     
     void Update()
@@ -52,5 +54,11 @@ public class Player : MonoBehaviour
     {
         playerAttributes.damageLevel++;
         playerAttributes.rocketDamage += playerAttributes.damageLevel * 2;
+    }
+
+    public void GetMoney(int amount)
+    {
+        playerAttributes.money += amount;
+        uiController.SetGoldTextValue(playerAttributes.money);
     }
 }
