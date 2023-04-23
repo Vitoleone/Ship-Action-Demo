@@ -15,8 +15,8 @@ public class PlayerAttributesScriptable : ScriptableObject
    public int damageLevel;
    
    //Defensive attributes
-   public int maxHealth;
-   public int currentHealth;
+   public float maxHealth;
+   public float currentHealth;
    public int healthLevel;
    
    //In-Game values
