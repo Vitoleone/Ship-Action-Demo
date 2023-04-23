@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,9 +9,11 @@ public class PlayerMovement : MonoBehaviour
 {
    [SerializeField] private FloatingJoystick joystick;
 
-   [SerializeField] private float moveSpeed;
+   [SerializeField] public float moveSpeed;
 
-   [SerializeField] private float rotateSpeed;
+   [SerializeField] public float rotateSpeed;
+   public bool isStoped = false;
+   public bool isReady = true;
 
    private Rigidbody myRigidbody;
    private Vector3 moveAxis;
@@ -22,36 +25,47 @@ public class PlayerMovement : MonoBehaviour
       lastMoveAxis = Vector3.zero;
    }
 
-   private void Update()
+   private void FixedUpdate()
    {
       Move();
    }
 
    private void Move()
    {
-      
       moveAxis = Vector3.zero;
       moveAxis.x = joystick.Horizontal * moveSpeed * Time.deltaTime;
       moveAxis.z = joystick.Vertical * moveSpeed * Time.deltaTime;
-      if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+      if (isStoped == false && isReady == true)
       {
-         Vector3 direction = Vector3.RotateTowards(transform.forward, moveAxis, rotateSpeed * Time.deltaTime, 0.0f);
-         transform.rotation = Quaternion.LookRotation(direction);
-         lastMoveAxis.x = moveAxis.x;
-         lastMoveAxis.z = moveAxis.z;
-         myRigidbody.MovePosition(myRigidbody.position + moveAxis);
+         if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+         {
+            Vector3 direction = Vector3.RotateTowards(transform.forward, moveAxis, rotateSpeed * Time.deltaTime, 0.0f);
+            transform.rotation = Quaternion.LookRotation(direction);
+            lastMoveAxis.x = moveAxis.x;
+            lastMoveAxis.z = moveAxis.z;
+            myRigidbody.MovePosition(myRigidbody.position + moveAxis);
+         }
+         else if (lastMoveAxis == Vector3.zero)
+         {
+            myRigidbody.MovePosition(myRigidbody.position+Vector3.forward*Time.deltaTime*moveSpeed);
+         }
+         else
+         {
+            Vector3 direction = Vector3.RotateTowards(transform.forward, lastMoveAxis, rotateSpeed * Time.deltaTime, 0.0f);
+            transform.rotation = Quaternion.LookRotation(direction);
+            myRigidbody.MovePosition(myRigidbody.position + lastMoveAxis);
+         }
       }
-      else if (lastMoveAxis == Vector3.zero)
+      else if(isReady == false && isStoped == false)
       {
          myRigidbody.MovePosition(myRigidbody.position+Vector3.forward*Time.deltaTime*moveSpeed);
       }
-      else
-      {
-         Vector3 direction = Vector3.RotateTowards(transform.forward, lastMoveAxis, rotateSpeed * Time.deltaTime, 0.0f);
-         transform.rotation = Quaternion.LookRotation(direction);
-         myRigidbody.MovePosition(myRigidbody.position + lastMoveAxis);
-      }
-      
-      
+   }
+
+   public void ResetSavedAxis()
+   {
+      lastMoveAxis = Vector3.zero;
+      joystick.Direction.Set(0,0);
+      moveAxis = Vector3.zero;
    }
 }
