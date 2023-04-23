@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         uiController.SetHealthBar(playerAttributes.currentHealth,playerAttributes.maxHealth);
-        uiController.SetAmmoTextValues(playerAttributes.currentHealth,playerAttributes.maxAmmo);
+        uiController.SetAmmoTextValues(playerAttributes.currentAmmo,playerAttributes.maxAmmo);
         uiController.SetGoldTextValue(playerAttributes.money);
         
     }
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void GetDamaged(int damage)
+    public void GetDamaged(float damage)
     {
         if (playerAttributes.currentHealth > 0)
         {
@@ -40,22 +40,44 @@ public class Player : MonoBehaviour
 
     public void UpgradeAmmo()
     {
-        playerAttributes.ammoLevel++;
-        playerAttributes.maxAmmo += playerAttributes.ammoLevel * 4;
+        if (playerAttributes.money >= playerAttributes.ammoLevel * 90)
+        {
+            playerAttributes.ammoLevel++;
+            playerAttributes.maxAmmo += playerAttributes.ammoLevel * 4;
+            UseMoney(playerAttributes.ammoLevel * 90);
+            playerAttributes.currentAmmo = playerAttributes.maxAmmo;
+            uiController.SetAmmoTextValues(playerAttributes.currentAmmo,playerAttributes.maxAmmo);
+        }
+        
     }
 
     public void UpgradeHealth()
     {
-        playerAttributes.healthLevel++;
-        playerAttributes.maxHealth += playerAttributes.healthLevel * 10;
+        if (playerAttributes.money >= playerAttributes.healthLevel * 130)
+        {
+            playerAttributes.healthLevel++;
+            playerAttributes.maxHealth += playerAttributes.healthLevel * 10;
+            UseMoney(playerAttributes.healthLevel * 130);
+            uiController.SetHealthBar(playerAttributes.currentHealth,playerAttributes.maxHealth);
+        }
+        
     }
 
     public void UpgradeDamage()
     {
-        playerAttributes.damageLevel++;
-        playerAttributes.rocketDamage += playerAttributes.damageLevel * 2;
+        if (playerAttributes.money >= playerAttributes.damageLevel * 180)
+        {
+            playerAttributes.damageLevel++;
+            playerAttributes.rocketDamage += playerAttributes.damageLevel * 5;
+            UseMoney(playerAttributes.damageLevel * 180);
+        }
     }
 
+    public void UseMoney(int amount)
+    {
+        playerAttributes.money -= amount;
+        uiController.SetGoldTextValue(playerAttributes.money);
+    }
     public void GetMoney(int amount)
     {
         playerAttributes.money += amount;
