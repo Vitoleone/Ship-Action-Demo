@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public PlayerUIController uiController;
     public PlayerAttributesScriptable playerAttributes;
+    public Base baseClass;
     
 
     void Start()
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            PlayerDeath();
         }
     }
 
@@ -82,5 +83,12 @@ public class Player : MonoBehaviour
     {
         playerAttributes.money += amount;
         uiController.SetGoldTextValue(playerAttributes.money);
+    }
+    public void PlayerDeath()
+    {
+        gameObject.SetActive(false);
+        baseClass.PlayerInBase();
+        gameObject.SetActive(true);
+        
     }
 }

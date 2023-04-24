@@ -1621,6 +1621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiController: {fileID: 1195280800}
   playerAttributes: {fileID: 11400000, guid: b9790e9c77679ae41a5b6f588566b6d6, type: 2}
+  baseClass: {fileID: 1538710866}
 --- !u!64 &424299983
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2699,8 +2700,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.39049834, y: -0.000000015840257, z: 0.0000000067190635, w: 0.92060363}
-  m_LocalPosition: {x: 4.5000005, y: 64.799995, z: -57.400017}
+  m_LocalRotation: {x: 0.008917071, y: 0.9840278, z: -0.051570654, w: 0.17014803}
+  m_LocalPosition: {x: -1.4500012, y: 4.799999, z: -49.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
