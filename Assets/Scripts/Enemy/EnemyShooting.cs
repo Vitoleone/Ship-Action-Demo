@@ -30,7 +30,6 @@ public class EnemyShooting : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Girdi");
             Player player = other.GetComponent<Player>();
             Shoot(player);
         }
@@ -63,9 +62,12 @@ public class EnemyShooting : MonoBehaviour
         {
             var bullet = pooledBullets.Get();
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            bulletRb.transform.DOMove(player.transform.position, 0.20f);
             bullet.transform.LookAt(player.transform);
             bullet.transform.DOLocalRotate(player.transform.position - bullet.transform.position,0);
+            bulletRb.transform.DOMove(player.transform.position, 0.20f).OnComplete(() =>
+            {
+                bullet.gameObject.SetActive(false);
+            });
             bullet.Init(ReleaseBullet);
             fireCooldown = 0.25f;
         }
