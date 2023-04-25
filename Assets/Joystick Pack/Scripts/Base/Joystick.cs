@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
-    public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
+    public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } set{} }
+    public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } set{} }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
 
     public float HandleRange
@@ -34,6 +34,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
     private RectTransform baseRect = null;
+    private Vector2 defaultBackgroundRectTransform;
 
     private Canvas canvas;
     private Camera cam;
@@ -42,6 +43,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     protected virtual void Start()
     {
+        defaultBackgroundRectTransform = background.position;
         HandleRange = handleRange;
         DeadZone = deadZone;
         baseRect = GetComponent<RectTransform>();
@@ -55,8 +57,25 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchorMax = center;
         handle.pivot = center;
         handle.anchoredPosition = Vector2.zero;
+        background.anchoredPosition = Vector2.zero;
     }
 
+    public virtual void ResetValues()
+    {
+        HandleRange = handleRange;
+        DeadZone = deadZone;
+        if (canvas == null)
+            Debug.LogError("The Joystick is not placed inside a canvas");
+
+        Vector2 center = new Vector2(0.5f, 0.5f);
+        background.pivot = center;
+        handle.anchorMin = center;
+        handle.anchorMax = center;
+        handle.pivot = center;
+        handle.anchoredPosition = Vector2.zero;
+        background.anchoredPosition = defaultBackgroundRectTransform;
+        input = Vector2.zero;
+    }
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
@@ -65,15 +84,17 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public void OnDrag(PointerEventData eventData)
     {
         cam = null;
-        if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
-            cam = canvas.worldCamera;
+            if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+                cam = canvas.worldCamera;
 
-        Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
-        Vector2 radius = background.sizeDelta / 2;
-        input = (eventData.position - position) / (radius * canvas.scaleFactor);
-        FormatInput();
-        HandleInput(input.magnitude, input.normalized, radius, cam);
-        handle.anchoredPosition = input * radius * handleRange;
+            Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+            Vector2 radius = background.sizeDelta / 2;
+            input = (eventData.position - position) / (radius * canvas.scaleFactor);
+            FormatInput();
+            HandleInput(input.magnitude, input.normalized, radius, cam);
+            handle.anchoredPosition = input * radius * handleRange;
+        
+
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)

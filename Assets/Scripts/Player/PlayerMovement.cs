@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-   [SerializeField] private FloatingJoystick joystick;
+   [SerializeField] public FloatingJoystick joystick;
 
    [SerializeField] public float moveSpeed;
 
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
    {
       myRigidbody = GetComponent<Rigidbody>();
       lastMoveAxis = Vector3.zero;
+      
    }
 
    private void FixedUpdate()
@@ -33,11 +34,21 @@ public class PlayerMovement : MonoBehaviour
    private void Move()
    {
       moveAxis = Vector3.zero;
-      moveAxis.x = joystick.Horizontal * moveSpeed * Time.deltaTime;
-      moveAxis.z = joystick.Vertical * moveSpeed * Time.deltaTime;
+      if(joystick.gameObject.activeSelf)
+      {
+        moveAxis.x = joystick.Horizontal * moveSpeed * Time.deltaTime;
+        moveAxis.z = joystick.Vertical * moveSpeed * Time.deltaTime;
+      }
+      else
+      {
+         moveAxis.x = 0;
+         moveAxis.z = 0;
+         lastMoveAxis = Vector3.zero;
+      }
+
       if (isStoped == false && isReady == true)
       {
-         if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+         if (joystick.Horizontal != 0 || joystick.Vertical != 0 && joystick.gameObject.activeSelf)
          {
             Vector3 direction = Vector3.RotateTowards(transform.forward, moveAxis, rotateSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(direction);
@@ -59,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
       else if(isReady == false && isStoped == false)
       {
          myRigidbody.MovePosition(myRigidbody.position+Vector3.forward*Time.deltaTime*moveSpeed);
+         joystick.ResetValues();
       }
    }
 

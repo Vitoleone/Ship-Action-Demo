@@ -40,6 +40,7 @@ public class Base : MonoBehaviour
         cameraController.EnableBaseCam();
         playerMovement.isStoped = true;
         playerMovement.isReady = false;
+        playerMovement.joystick.gameObject.SetActive(false);
         player.uiController.OpenUpgradeMenu();
         playerMovement.moveSpeed = 0;
         player.transform.DOMove(basePoint.transform.position, .75f);
@@ -62,6 +63,7 @@ public class Base : MonoBehaviour
         player.transform.DOMove(flyPoint.transform.position, .75f).OnComplete(() =>
         {
             playerMovement.isReady = true;
+            playerMovement.joystick.gameObject.SetActive(true);
         });
         player.transform.DOLookAt(flyPoint.transform.position, .75f);
     }
