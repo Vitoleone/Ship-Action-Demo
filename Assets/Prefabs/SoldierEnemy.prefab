@@ -641,7 +641,7 @@ Transform:
   m_GameObject: {fileID: 1852647567041682416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5222823721610308740}
@@ -712,9 +712,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f59bcaee6396546a226e7829fb9c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 10
   damage: 10
   goldPrefab: {fileID: 88447522627732597, guid: ec7fb618b7a14734ca8ddb7d35dbddc0, type: 3}
+  questUIController: {fileID: 0}
 --- !u!1 &1929764583424359081
 GameObject:
   m_ObjectHideFlags: 0
