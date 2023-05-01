@@ -3091,7 +3091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4333738787854496993, guid: 4ce8211383addb249b74657e8c434cf2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4333738787854496993, guid: 4ce8211383addb249b74657e8c434cf2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4830,7 +4830,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.39049834, y: -0.000000015840257, z: 0.0000000067190635, w: 0.92060363}
-  m_LocalPosition: {x: 4.5000005, y: 68.8, z: -57.40002}
+  m_LocalPosition: {x: 4.5000005, y: 73.8, z: -57.40002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9343,6 +9343,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 306707532}
     m_Modifications:
+    - target: {fileID: 714029807389389447, guid: 1df1490d77c96f541bd6a68492557628, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 49.2
+      objectReference: {fileID: 0}
     - target: {fileID: 714029807431192281, guid: 1df1490d77c96f541bd6a68492557628, type: 3}
       propertyPath: m_Name
       value: EGYPTBASE
@@ -9575,7 +9579,7 @@ PrefabInstance:
       objectReference: {fileID: 1195280802}
     - target: {fileID: 5623130971951811215, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5623130972173054618, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9764,7 +9768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6422207444204811878, guid: b1e2c2de63508524daa3b76a0253c164, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 68.8
+      value: 73.8
       objectReference: {fileID: 0}
     - target: {fileID: 6422207444204811878, guid: b1e2c2de63508524daa3b76a0253c164, type: 3}
       propertyPath: m_LocalPosition.z

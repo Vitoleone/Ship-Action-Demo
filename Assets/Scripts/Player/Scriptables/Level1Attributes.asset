@@ -15,7 +15,7 @@ MonoBehaviour:
   maxAmmo: 20
   currentAmmo: 20
   ammoLevel: 1
-  rocketDamage: 30
+  rocketDamage: 25
   damageLevel: 1
   maxHealth: 200
   currentHealth: 200
