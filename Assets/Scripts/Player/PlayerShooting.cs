@@ -13,6 +13,7 @@ public class PlayerShooting : MonoBehaviour
     private ObjectPool<Rocket> pooledRockets;
     public float fireCooldown = 0;
     private Player player;
+    
 
     [SerializeField] private GameObject crosshair; 
 
@@ -67,6 +68,7 @@ public class PlayerShooting : MonoBehaviour
 
     void ExplodeRocket(Rocket rocket)
     {
+        
         pooledRockets.Release(rocket);
     }
     

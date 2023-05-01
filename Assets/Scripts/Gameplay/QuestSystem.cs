@@ -12,7 +12,7 @@ public class QuestSystem : MonoBehaviour
    {
       if (enemyList.enemyNumber <= 0)
       {
-         WinGame();
+        Invoke("WinGame",2.5f);
       }
    }
 

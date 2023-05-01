@@ -19,7 +19,6 @@ public class EnemyBullet : MonoBehaviour
         {
             explodeAction(this);
             other.GetComponent<Player>().GetDamaged(damage);
-            Debug.Log("EnemyBullet");
         }
     }
 }
