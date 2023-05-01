@@ -29,7 +29,7 @@ public class QuestUIController : MonoBehaviour
 
     public void NextLevel()
     {
-        if (SceneManager.GetActiveScene().name == "Level3")
+        if (SceneManager.GetActiveScene().name == "Level2")
         {
             SceneManager.LoadScene("MainMenu");
         }
@@ -42,5 +42,10 @@ public class QuestUIController : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

@@ -62,15 +62,23 @@ public class EnemyShooting : MonoBehaviour
         {
             var bullet = pooledBullets.Get();
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            bullet.transform.LookAt(player.transform);
+            bullet.transform.eulerAngles = new Vector3(0,0,GetAngleFromVectorFloat( bullet.transform.position - player.transform.position ));
             bullet.transform.DOLocalRotate(player.transform.position - bullet.transform.position,0);
-            bulletRb.transform.DOMove(player.transform.position, 0.20f).OnComplete(() =>
+            bulletRb.transform.DOMove(player.transform.position, 0.35f).OnComplete(() =>
             {
                 bullet.gameObject.SetActive(false);
             });
             bullet.Init(ReleaseBullet);
-            fireCooldown = 0.25f;
+            fireCooldown = 0.35f;
         }
+    }
+
+    public float GetAngleFromVectorFloat(Vector3 dir)
+    {
+        dir = dir.normalized;
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0) n += 360;
+        return n;
     }
 
     void ReleaseBullet(EnemyBullet bullet)

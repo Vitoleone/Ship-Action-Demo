@@ -13,10 +13,18 @@ public class Base : MonoBehaviour
     [SerializeField] private GameObject basePoint;
     [SerializeField] private GameObject baseForward;
     [SerializeField] private GameObject flyPoint;
+    private SphereCollider baseCollider;
+
+    [SerializeField] private Animator cameraAnimator;
+    [SerializeField] private bool playerCam = true;
+
+    private bool inBase = false;
 
     private void Start()
     {
         playerMovement = player.GetComponent<PlayerMovement>();
+        baseCollider = gameObject.GetComponent<SphereCollider>();
+        PlayerInBase();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,9 +36,9 @@ public class Base : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
-        if (other.CompareTag("Player"))
+        if (inBase)
         {
             UpdateHealth();
         }
@@ -38,15 +46,17 @@ public class Base : MonoBehaviour
 
     public void PlayerInBase()
     {
+        baseCollider.enabled = false;
+        inBase = true;
+        SwitchCamera();
         crosshair.gameObject.SetActive(false);
-        cameraController.EnableBaseCam();
         playerMovement.isStoped = true;
         playerMovement.isReady = false;
         playerMovement.joystick.gameObject.SetActive(false);
         player.uiController.OpenUpgradeMenu();
         playerMovement.moveSpeed = 0;
         player.transform.DOMove(basePoint.transform.position, .75f);
-        player.transform.DOLookAt(-baseForward.transform.position, .75f).OnComplete(() =>
+        player.transform.DORotate(new Vector3(10,0,0), .75f).OnComplete(() =>
         {
             player.uiController.OpenUpgradeMenu();
             player.uiController.OpenFlyButton();
@@ -55,8 +65,9 @@ public class Base : MonoBehaviour
 
     public void PlayerOutBase()
     {
-        
-        cameraController.EnablePlayerCam();
+        inBase = false;
+        Invoke("UpdateBaseCollider",1f);
+        SwitchCamera();
         player.uiController.CloseUpgradeMenu();
         player.uiController.CloseFlyButton();
         player.uiController.SetHealthBar(player.playerAttributes.currentHealth,player.playerAttributes.maxHealth);
@@ -76,11 +87,13 @@ public class Base : MonoBehaviour
     {
         if (player.playerAttributes.currentHealth < player.playerAttributes.maxHealth)
         {
-            player.playerAttributes.currentHealth += player.playerAttributes.maxHealth/10 * Time.deltaTime;
+            player.playerAttributes.currentHealth += player.playerAttributes.maxHealth/5 * Time.deltaTime;
+            player.uiController.SetHealthBar(player.playerAttributes.currentHealth,player.playerAttributes.maxHealth);
         }
         else
         {
             player.playerAttributes.currentHealth = player.playerAttributes.maxHealth;
+            player.uiController.SetHealthBar(player.playerAttributes.currentHealth,player.playerAttributes.maxHealth);
         }
         
     }
@@ -90,4 +103,24 @@ public class Base : MonoBehaviour
         player.uiController.SetAmmoTextValues(player.playerAttributes.currentAmmo,player.playerAttributes.maxAmmo);
         
     }
+
+    public void SwitchCamera()
+    {
+        if (playerCam)
+        {
+            cameraAnimator.Play("BaseCam");
+        }
+        else
+        {
+            cameraAnimator.Play("PlayerCam");
+        }
+
+        playerCam = !playerCam;
+    }
+
+    private void UpdateBaseCollider()
+    {
+        baseCollider.enabled = true;
+    }
+    
 }

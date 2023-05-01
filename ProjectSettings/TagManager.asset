@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - FxTemporaire
+  - LeftArea
   layers:
   - Default
   - TransparentFX

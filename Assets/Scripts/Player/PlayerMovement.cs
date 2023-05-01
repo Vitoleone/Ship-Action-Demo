@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
    [SerializeField] public float moveSpeed;
 
    [SerializeField] public float rotateSpeed;
+   [SerializeField] Base basevalue;
    public bool isStoped = false;
    public bool isReady = true;
 
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
    private Vector3 moveAxis;
    private Vector3 lastMoveAxis;
    private Vector3 savedDirection;
+   private Vector3 direction;
    private void Awake()
    {
       myRigidbody = GetComponent<Rigidbody>();
@@ -29,6 +31,14 @@ public class PlayerMovement : MonoBehaviour
    private void FixedUpdate()
    {
       Move();
+   }
+
+   private void OnTriggerEnter(Collider other)
+   {
+      if (other.CompareTag("LeftArea"))
+      {
+         basevalue.PlayerInBase();
+      }
    }
 
    private void Move()
@@ -49,8 +59,8 @@ public class PlayerMovement : MonoBehaviour
       if (isStoped == false && isReady == true)
       {
          if (joystick.Horizontal != 0 || joystick.Vertical != 0 && joystick.gameObject.activeSelf)
-         {
-            Vector3 direction = Vector3.RotateTowards(transform.forward, moveAxis, rotateSpeed * Time.deltaTime, 0.0f);
+         { 
+            direction = Vector3.RotateTowards(transform.forward, moveAxis, rotateSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(direction);
             lastMoveAxis.x = moveAxis.x;
             lastMoveAxis.z = moveAxis.z;
@@ -62,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
          }
          else
          {
-            Vector3 direction = Vector3.RotateTowards(transform.forward, lastMoveAxis, rotateSpeed * Time.deltaTime, 0.0f);
+            direction = Vector3.RotateTowards(transform.forward, lastMoveAxis, rotateSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(direction);
             myRigidbody.MovePosition(myRigidbody.position + lastMoveAxis);
          }
@@ -74,10 +84,5 @@ public class PlayerMovement : MonoBehaviour
       }
    }
 
-   public void ResetSavedAxis()
-   {
-      lastMoveAxis = Vector3.zero;
-      joystick.Direction.Set(0,0);
-      moveAxis = Vector3.zero;
-   }
+
 }

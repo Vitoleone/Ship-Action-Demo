@@ -27,7 +27,6 @@ public class Rocket : MonoBehaviour
             Instantiate(explosionParticle,gameObject.transform.position-Vector3.down*2,quaternion.identity);
             explodeAction(this);
             other.GetComponent<Enemy>().TakeDamage(playerAttributes.rocketDamage);
-            Debug.Log("Damaged");
         }
     }
 }
