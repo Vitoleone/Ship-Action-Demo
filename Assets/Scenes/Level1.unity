@@ -5197,6 +5197,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5623130971887615925, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 500426792}
+    - target: {fileID: 5623130971887615925, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NextLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 5623130972173054618, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5344,6 +5352,14 @@ PrefabInstance:
     - target: {fileID: 5623130973476035777, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -189.85596
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623130973530598510, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 500426792}
+    - target: {fileID: 5623130973530598510, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5623130973582835812, guid: e42dfa19faac34c4db9de1be440d0d14, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
