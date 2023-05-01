@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < 7; i++)
         {
             GameObject gold =  Instantiate(goldPrefab, transform.position + Vector3.up*2, quaternion.identity);
-            gold.transform.DOMove(Random.insideUnitSphere * 5 + Vector3.up * 2, 0.30f);
+            gold.transform.DOMove(transform.position + Random.insideUnitSphere * 12 + Vector3.up * 15, 0.30f);
         }
         enemyList.KillSoldierEnemy(gameObject.name,this);
         questUIController.UpdateEnemyNumberTexts();

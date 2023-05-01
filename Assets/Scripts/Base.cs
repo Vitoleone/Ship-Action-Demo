@@ -7,6 +7,7 @@ using UnityEngine;
 public class Base : MonoBehaviour
 {
     [SerializeField] private Player player;
+    [SerializeField] private Crosshair crosshair;
     private PlayerMovement playerMovement;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject basePoint;
@@ -37,6 +38,7 @@ public class Base : MonoBehaviour
 
     public void PlayerInBase()
     {
+        crosshair.gameObject.SetActive(false);
         cameraController.EnableBaseCam();
         playerMovement.isStoped = true;
         playerMovement.isReady = false;
@@ -53,6 +55,7 @@ public class Base : MonoBehaviour
 
     public void PlayerOutBase()
     {
+        
         cameraController.EnablePlayerCam();
         player.uiController.CloseUpgradeMenu();
         player.uiController.CloseFlyButton();
@@ -64,6 +67,7 @@ public class Base : MonoBehaviour
         {
             playerMovement.isReady = true;
             playerMovement.joystick.gameObject.SetActive(true);
+            crosshair.gameObject.SetActive(true);
         });
         player.transform.DOLookAt(flyPoint.transform.position, .75f);
     }

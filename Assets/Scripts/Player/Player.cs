@@ -15,7 +15,8 @@ public class Player : MonoBehaviour
         uiController.SetHealthBar(playerAttributes.currentHealth,playerAttributes.maxHealth);
         uiController.SetAmmoTextValues(playerAttributes.currentAmmo,playerAttributes.maxAmmo);
         uiController.SetGoldTextValue(playerAttributes.money);
-        
+        Time.timeScale = 1;
+
     }
     
     void Update()

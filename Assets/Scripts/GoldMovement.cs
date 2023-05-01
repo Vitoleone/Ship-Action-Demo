@@ -13,13 +13,13 @@ public class GoldMovement : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        hoopTween = transform.DOMoveY(transform.position.y + 2f, 1f).SetEase(Ease.InOutFlash).SetLoops(-1,LoopType.Yoyo);
+        hoopTween = transform.DORotate(new Vector3(0, 360, 0), 0.5f).SetLoops(-1,LoopType.Yoyo);
     }
 
     private void Update()
     {
         distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance < 5f)
+        if (distance < 10f)
         {
             hoopTween.Kill();
             transform.DOMove(player.transform.position, 0.5f);
