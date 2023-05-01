@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PlayerAttributes
   m_EditorClassIdentifier: 
   maxAmmo: 20
-  currentAmmo: 0
+  currentAmmo: 20
   ammoLevel: 1
   rocketDamage: 10
   damageLevel: 1
   maxHealth: 200000
-  currentHealth: 200000
+  currentHealth: 178620
   healthLevel: 1
-  money: 0
+  money: 1845
   gem: 0
