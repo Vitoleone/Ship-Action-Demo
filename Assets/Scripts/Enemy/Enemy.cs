@@ -6,10 +6,10 @@ using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour,IHitable
 {
-    public int health = 100;
-    public int damage = 10;
+    public float health = 100;
+    public float damage = 10;
     public GameObject goldPrefab;
     public QuestUIController questUIController;
     private EnemiesList enemyList;
@@ -19,19 +19,7 @@ public class Enemy : MonoBehaviour
     {
         enemyList = GameObject.Find("EnemiesList").GetComponent<EnemiesList>();
     }
-
-    public void TakeDamage(int damage)
-    {
-        if (health-damage > 0)
-        {
-            health -= damage;    
-        }
-        else
-        {
-            EnemyKilled();
-        }
-    }
-
+    
     private void EnemyKilled()
     {
         for (int i = 0; i < 15; i++)
@@ -42,5 +30,17 @@ public class Enemy : MonoBehaviour
         enemyList.KillSoldierEnemy(gameObject.name,this);
         questUIController.UpdateEnemyNumberTexts();
         Destroy(gameObject);
+    }
+
+    public void GetHit(float damage)
+    {
+        if (health-damage > 0)
+        {
+            health -= damage;    
+        }
+        else
+        {
+            EnemyKilled();
+        }
     }
 }

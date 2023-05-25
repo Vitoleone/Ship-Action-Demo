@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Rocket : MonoBehaviour
+public class Rocket : MonoBehaviour,IBullet
 {
     private Action<Rocket> explodeAction;
     public PlayerAttributesScriptable playerAttributes;
@@ -17,16 +17,20 @@ public class Rocket : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("Ground"))
+        if (other.GetComponent<IGround>() != null)
         {
-            Instantiate(explosionParticle,gameObject.transform.position-Vector3.down*2,quaternion.identity);
+            other.GetComponent<IGround>().GroundHit(explosionParticle,gameObject.transform.position-Vector3.down*2);
             explodeAction(this);
         }
-        else if(other.transform.CompareTag("Enemy"))
+        else if(other.GetComponent<Enemy>() != null)
         {
-            Instantiate(explosionParticle,gameObject.transform.position-Vector3.down*2,quaternion.identity);
-            explodeAction(this);
-            other.GetComponent<Enemy>().TakeDamage(playerAttributes.rocketDamage);
+            CreateBullet();
+            other.GetComponent<Enemy>().GetHit(playerAttributes.rocketDamage);
         }
+    }
+    public void CreateBullet()
+    {
+        Instantiate(explosionParticle, gameObject.transform.position - Vector3.down * 2, quaternion.identity);
+        explodeAction(this);
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour,IBullet
 {
     private Action<EnemyBullet> explodeAction;
     [SerializeField] private ParticleSystem bulletExplodeParticle;
@@ -17,11 +17,16 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.CompareTag("Player"))
+        if(other.GetComponent<Player>() != null)
         {
-            Instantiate(bulletExplodeParticle, transform.position, quaternion.identity);
-            explodeAction(this);
-            other.GetComponent<Player>().GetDamaged(damage);
+            CreateBullet();
+            other.GetComponent<Player>().GetHit(damage);
         }
+    }
+
+    public void CreateBullet()
+    {
+        Instantiate(bulletExplodeParticle, transform.position, quaternion.identity);
+        explodeAction(this);
     }
 }

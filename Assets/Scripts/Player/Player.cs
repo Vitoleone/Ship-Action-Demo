@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IHitable
 {
     public PlayerUIController uiController;
     public PlayerAttributesScriptable playerAttributes;
@@ -14,28 +15,17 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        uiController.SetHealthBar(playerAttributes.currentHealth,playerAttributes.maxHealth);
-        uiController.SetAmmoTextValues(playerAttributes.currentAmmo,playerAttributes.maxAmmo);
-        uiController.SetGoldTextValue(playerAttributes.money);
-        uiController.SetAllLevelValues(playerAttributes.healthLevel,playerAttributes.ammoLevel,playerAttributes.damageLevel);
+        SetTexts();
         Time.timeScale = 1;
     }
-    
-    public void GetDamaged(float damage)
+
+    private void SetTexts()
     {
-        if (playerAttributes.currentHealth > 0)
-        {
-            playerAttributes.currentHealth -= damage;
-            uiController.SetHealthBar(playerAttributes.currentHealth, playerAttributes.maxHealth);
-        }
-        else
-        {
-            uiController.shootButton.SetActive(false);
-            uiController.moveJoyStick.SetActive(false);
-            gameObject.SetActive(false);
-            Instantiate(playerDeathParticle, transform.position, quaternion.identity);
-            Invoke("PlayerDeath",1.25f);
-        }
+        uiController.SetHealthBar(playerAttributes.currentHealth, playerAttributes.maxHealth);
+        uiController.SetAmmoTextValues(playerAttributes.currentAmmo, playerAttributes.maxAmmo);
+        uiController.SetGoldTextValue(playerAttributes.money);
+        uiController.SetAllLevelValues(playerAttributes.healthLevel, playerAttributes.ammoLevel,
+            playerAttributes.damageLevel);
     }
 
     public void UpgradeAmmo()
@@ -90,11 +80,28 @@ public class Player : MonoBehaviour
         playerAttributes.money += amount;
         uiController.SetGoldTextValue(playerAttributes.money);
     }
-    void PlayerDeath()
+    async void PlayerDeath()
     {
+        await Task.Delay(1250);
         baseClass.PlayerInBase();
         gameObject.SetActive(true);
-        
     }
-    
+
+    public void GetHit(float damage)
+    {
+        if (playerAttributes.currentHealth > 0)
+        {
+            playerAttributes.currentHealth -= damage;
+            uiController.SetHealthBar(playerAttributes.currentHealth, playerAttributes.maxHealth);
+        }
+        else
+        {
+            uiController.shootButton.SetActive(false);
+            uiController.moveJoyStick.SetActive(false);
+            gameObject.SetActive(false);
+            PlayerDeath();
+            Instantiate(playerDeathParticle, transform.position, quaternion.identity);
+            
+        }
+    }
 }
